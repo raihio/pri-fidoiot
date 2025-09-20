@@ -219,7 +219,7 @@ public class FdoSimCommandOwnerModule implements ServiceInfoModule {
 
           kv = new ServiceInfoKeyValuePair();
           kv.setKeyName(ARGS);
-          kv.setValue(Mapper.INSTANCE.writeValue(commandArgs));
+          kv.setValue(Mapper.INSTANCE.writeAsCborByteString(commandArgs));
           state.getGlobalState().getQueue().add(kv);
 
           if (instructions[i].getMayFail() != null) {
