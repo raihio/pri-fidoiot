@@ -4,14 +4,17 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import org.fidoalliance.fdo.protocol.message.AnyType;
 import org.fidoalliance.fdo.protocol.message.Hash;
 import org.fidoalliance.fdo.protocol.message.HashType;
 import org.fidoalliance.fdo.protocol.message.OwnerPublicKey;
 import org.fidoalliance.fdo.protocol.message.PublicKeyEncoding;
 import org.fidoalliance.fdo.protocol.message.PublicKeyType;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.dataformat.cbor.CBORConstants;
 
 public class SerializationTest {
 
@@ -51,5 +54,20 @@ public class SerializationTest {
     ownerKey2 = Mapper.INSTANCE.readObject(data, OwnerPublicKey.class);*/
     byte[] expectedData = new byte[]{1,2,3};
     assert (Arrays.equals(expectedData, data));
+  }
+
+  @Test
+  public void wrapCborTest() throws IOException {
+    String[] input = new String[]{"date", "+%s"};
+
+    byte[] outerBstr = Mapper.INSTANCE.writeAsCborByteString(input);
+
+    byte[] innerCbor = Mapper.INSTANCE.readValue(outerBstr, byte[].class);
+
+    assertTrue(CBORConstants.hasMajorType(CBORConstants.MAJOR_TYPE_BYTES, outerBstr[0]));
+    assertTrue(CBORConstants.hasMajorType(CBORConstants.MAJOR_TYPE_ARRAY, innerCbor[0]));
+
+    assertArrayEquals(input, Mapper.INSTANCE.readValue(innerCbor, String[].class));
+    assertArrayEquals(input, Mapper.INSTANCE.readFromCborByteString(outerBstr, String[].class));
   }
 }
