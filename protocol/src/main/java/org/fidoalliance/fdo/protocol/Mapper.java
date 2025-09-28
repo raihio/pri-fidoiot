@@ -135,6 +135,13 @@ public enum Mapper {
     return cborMapper.writeValueAsBytes(writeValue(value));
   }
 
+    /**
+     * @return A CBOR Null value.
+     */
+  public byte[] cborNull() {
+      return new byte[]{(byte) 0xf6};
+  }
+
   /**
    * Writes an Object as a yaml encoded string.
    *

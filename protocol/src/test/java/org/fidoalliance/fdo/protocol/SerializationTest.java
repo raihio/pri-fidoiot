@@ -10,11 +10,11 @@ import org.fidoalliance.fdo.protocol.message.HashType;
 import org.fidoalliance.fdo.protocol.message.OwnerPublicKey;
 import org.fidoalliance.fdo.protocol.message.PublicKeyEncoding;
 import org.fidoalliance.fdo.protocol.message.PublicKeyType;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.dataformat.cbor.CBORConstants;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SerializationTest {
 
@@ -69,5 +69,13 @@ public class SerializationTest {
 
     assertArrayEquals(input, Mapper.INSTANCE.readValue(innerCbor, String[].class));
     assertArrayEquals(input, Mapper.INSTANCE.readFromCborByteString(outerBstr, String[].class));
+  }
+
+  @Test
+  public void cborNullTest() {
+      byte[] cbor = Mapper.INSTANCE.cborNull();
+
+      assertTrue(CBORConstants.hasMajorType(CBORConstants.MAJOR_TYPE_MISC, cbor[0]));
+      assertEquals(CBORConstants.BYTE_NULL, cbor[0]);
   }
 }
