@@ -1,7 +1,7 @@
 # Copyright 2022 Intel Corporation
 # SPDX-License-Identifier: Apache 2.0
 
-FROM ubuntu:22.04
+FROM ubuntu:22.04@sha256:c7eb020043d8fc2ae0793fb35a37bff1cf33f156d4d4b12ccc7f3ef8706c38b1
 ARG _JAVA_OPTIONS
 ENV _JAVA_OPTIONS=${_JAVA_OPTIONS}
 RUN apt-get update && apt-get install -y openjdk-17-jre wget --no-install-recommends

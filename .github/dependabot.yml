@@ -1,0 +1,63 @@
+version: 2
+updates:
+  # Maven dependencies
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+
+  # Docker - aio
+  - package-ecosystem: "docker"
+    directory: "/component-samples/demo/aio"
+    schedule:
+      interval: "weekly"
+
+  # Docker - device
+  - package-ecosystem: "docker"
+    directory: "/component-samples/demo/device"
+    schedule:
+      interval: "weekly"
+
+  # Docker - manufacturer
+  - package-ecosystem: "docker"
+    directory: "/component-samples/demo/manufacturer"
+    schedule:
+      interval: "weekly"
+
+  # Docker - owner
+  - package-ecosystem: "docker"
+    directory: "/component-samples/demo/owner"
+    schedule:
+      interval: "weekly"
+
+  # Docker - reseller
+  - package-ecosystem: "docker"
+    directory: "/component-samples/demo/reseller"
+    schedule:
+      interval: "weekly"
+
+  # Docker - rv
+  - package-ecosystem: "docker"
+    directory: "/component-samples/demo/rv"
+    schedule:
+      interval: "weekly"
+
+  # Docker - build
+  - package-ecosystem: "docker"
+    directory: "/build"
+    schedule:
+      interval: "weekly"
